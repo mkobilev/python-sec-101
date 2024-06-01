@@ -1,0 +1,10 @@
+version: "3"
+name: "task2"
+
+services:
+    app:
+        container_name: task2
+        restart: always
+        build: .
+        ports:
+        - "8888"

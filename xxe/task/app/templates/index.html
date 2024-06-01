@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ЗПБыстро</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h4>ЗПБыстро</h4>
+
+      <!-- <img src="/static/sad_rick.png" width="400px" /> -->
+      <div class="mt-2">
+        <span>
+          Супер пупер система расчета зарплаты:
+        </span>
+      </div>
+      <div class="mt-4">
+        <form method="post">
+
+          <div class="form-group">
+            <label for="firstName">Имя:</label>
+            <input
+              id="firstName"
+              name="firstName"
+              class="form-control"
+              required
+            ></input>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Фамилия:</label>
+            <input
+              id="lastName"
+              name="lastName"
+              class="form-control"
+              required
+            ></input>
+          </div>
+
+          <div class="form-group">
+            <label for="days">Рабочие дни:</label>
+            <input
+              type="number"
+              min="1"
+              max="30"
+              id="days"
+              name="days"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Рассчитать ЗП!</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

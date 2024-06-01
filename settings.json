@@ -1,0 +1,14 @@
+{
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "explicit"
+    },
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--skip-string-normalization",
+        "--line-length",
+        "100"
+    ]
+  }
+}
