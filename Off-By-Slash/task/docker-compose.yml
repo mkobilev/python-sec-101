@@ -1,4 +1,5 @@
 version: "3"
+
 name: "task2"
 
 services:
@@ -7,4 +8,4 @@ services:
         restart: always
         build: .
         ports:
-        - "8888"
+        - "31338:80"

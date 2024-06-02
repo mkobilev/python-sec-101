@@ -21,10 +21,8 @@ services:
         #     -  "31337:8888"
         labels:
             - "traefik.enable=true"
-            # - "traefik.http.routers.task1.rule=Host(`tasks.mxkv.ru`) && PathPrefix(`/task1`)"
-            - "traefik.http.routers.task1.rule=PathPrefix(`/task1`)"
-            - "traefik.http.middlewares.task1-stripprefix.stripprefix.prefixes=/task1"
-            - "traefik.http.routers.task1.middlewares=task1-stripprefix"
+            - "traefik.http.routers.task1.rule=Host(`pickle-rick.tasks.mxkv.ru`)"
+#            - "traefik.http.routers.task1.rule=PathPrefix(`/task1`)"
             - "traefik.http.routers.task1.service=task1"
             - "traefik.http.services.task1.loadbalancer.server.port=8888"
             - "traefik.http.routers.task1.entrypoints=web"
@@ -37,7 +35,7 @@ services:
         <<: *service-defaults
         container_name: off-by-slash
         build:
-            context: ./Off-By-Slash/task
+            context: ./off-by-slash/task
         ports:
             -  "31338:80"
         labels:
