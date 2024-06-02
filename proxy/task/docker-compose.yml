@@ -1,6 +1,6 @@
 version: "3"
 
-name: "taskN"
+name: "proxy"
 
 services:
     app:
@@ -8,6 +8,12 @@ services:
            context: .
        ports:
            -  "8888"
+    intranet:
+       build:
+           context: ./app-localhost
+    google.com:
+       build:
+           context: ./app-internet
     nginx: 
         image: nginx:latest
         volumes:

@@ -2,23 +2,177 @@ version: "3"
 
 name: "all_task"
 
+x-service-defaults: &service-defaults
+  restart: always
+
 services:
     pickle_rce:
+        <<: *service-defaults
         container_name: pickle-rce
         build:
             context: ./pickle-rce/task
         ports:
             -  "31337:8888"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.task1.rule=Host(`tasks.mxkv.ru`) && PathPrefix(`/task1`)"
+            - "traefik.http.routers.task1.service=task1"
+            - "traefik.http.services.task1.loadbalancer.server.port=8888"
+            - "traefik.http.routers.task1.entrypoints=websecure"
+            - "traefik.http.routers.task1.tls.certresolver=myresolver"
+    
     # off_by_slash:
     app:
+        <<: *service-defaults
         container_name: off-by-slash
         build:
             context: ./Off-By-Slash/task
         ports:
             -  "31338:80"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.task2.rule=Host(`task2.${HOST_DOMAIN}`)"
+            - "traefik.http.routers.task2.service=task2"
+            - "traefik.http.services.task2.loadbalancer.server.port=8888"
+            - "traefik.http.routers.task2.entrypoints=websecure"
+            - "traefik.http.routers.task2.tls.certresolver=myresolver"
     xxe:
+        <<: *service-defaults
         container_name: xxe
         build:
             context: ./xxe/task
         ports:
             -  "31339:8888"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.task3.rule=Host(`task3.${HOST_DOMAIN}`)"
+            - "traefik.http.routers.task3.service=task3"
+            - "traefik.http.services.task3.loadbalancer.server.port=8888"
+            - "traefik.http.routers.task3.entrypoints=websecure"
+            - "traefik.http.routers.task3.tls.certresolver=myresolver"
+    
+    ssti:
+        <<: *service-defaults
+        container_name: ssti
+        build:
+            context: ./ssti/task
+        ports:
+            -  "31340:8888"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.task4.rule=Host(`task4.${HOST_DOMAIN}`)"
+            - "traefik.http.routers.task4.service=task4"
+            - "traefik.http.services.task4.loadbalancer.server.port=8888"
+            - "traefik.http.routers.task4.entrypoints=websecure"
+            - "traefik.http.routers.task4.tls.certresolver=myresolver"
+
+    jwt-none:
+        <<: *service-defaults
+        container_name: jwtnone
+        build:
+            context: ./jwt-none/task
+        ports:
+            -  "31341:8888"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.task5.rule=Host(`task5.${HOST_DOMAIN}`)"
+            - "traefik.http.routers.task5.service=task5"
+            - "traefik.http.services.task5.loadbalancer.server.port=8888"
+            - "traefik.http.routers.task5.entrypoints=websecure"
+            - "traefik.http.routers.task5.tls.certresolver=myresolver"
+
+    safe_eval_weak:
+        <<: *service-defaults
+        container_name: safe_eval_weak
+        build:
+            context: ./safe_eval_weak/task
+        ports:
+            -  "31342:8888"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.task6.rule=Host(`task6.${HOST_DOMAIN}`)"
+            - "traefik.http.routers.task6.service=task6"
+            - "traefik.http.services.task6.loadbalancer.server.port=8888"
+            - "traefik.http.routers.task6.entrypoints=websecure"
+            - "traefik.http.routers.task6.tls.certresolver=myresolver"
+
+    safe_eval_strong:
+        <<: *service-defaults
+        container_name: safe_eval_strong
+        build:
+             context: ./safe_eval_strong/task
+        ports:
+            -  "31343:8888"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.task7.rule=Host(`task7.${HOST_DOMAIN}`)"
+            - "traefik.http.routers.task7.service=task7"
+            - "traefik.http.services.task7.loadbalancer.server.port=8888"
+            - "traefik.http.routers.task7.entrypoints=websecure"
+            - "traefik.http.routers.task7.tls.certresolver=myresolver"
+
+
+    # proxy
+    proxy:
+        <<: *service-defaults
+        container_name: proxy
+        build:
+            context: ./proxy/task
+        ports:
+           -  "31344:8888"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.task8.rule=Host(`task8.${HOST_DOMAIN}`)"
+            - "traefik.http.routers.task8.service=task8"
+            - "traefik.http.services.task8.loadbalancer.server.port=8888"
+            - "traefik.http.routers.task8.entrypoints=websecure"
+            - "traefik.http.routers.task8.tls.certresolver=myresolver"
+    intranet:
+        <<: *service-defaults
+        container_name: intranet
+        build:
+            context: ./proxy/task/app-localhost
+    google.com:
+        <<: *service-defaults
+        container_name: google.com
+        build:
+            context: ./proxy/task/app-internet
+
+    traefik:
+        <<: *service-defaults
+        image: traefik:v2.10
+        container_name: tasks-traefik
+        ports:
+        - "80:80"
+        - "443:443"
+        - "8080:8080"
+        command:
+        - "--api.dashboard=true"
+        - "--api.insecure=true"
+        - "--log.level=DEBUG"
+        - "--log.filePath=/logs/traefik.log"
+        - "--accessLog.filePath=/logs/access.log"
+        - "--providers.docker=true"
+        - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+        - "--providers.docker.swarmMode=false"
+        - "--providers.docker.exposedbydefault=false"
+        - "--entrypoints.web.address=:80"
+        - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+        - "--entrypoints.websecure.address=:443"
+        - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+        - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+        - "--certificatesresolvers.myresolver.acme.email=mkobilev@gmail.com"
+        - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme-v2.json"
+
+        volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+        - "./letsencrypt:/letsencrypt"
+        - "/var/log/traefik:/logs"
+        labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.dashboard.rule=Host(`dashboard-dev.tasks.mxkv.ru`)"
+        - "traefik.http.routers.dashboard.entrypoints=websecure"
+        - "traefik.http.routers.dashboard.tls.certresolver=myresolver"
+        - "traefik.http.routers.dashboard.service=api@internal"
+        - "traefik.http.routers.dashboard.middlewares=auth"
+        - "traefik.http.middlewares.auth.basicauth.users=testuser:$$apr1$$jIKW.bdS$$eKXe4Lxjgy/rH65wP1iQe1"

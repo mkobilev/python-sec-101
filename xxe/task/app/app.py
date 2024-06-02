@@ -54,10 +54,6 @@ def doLogin():
         with open(f"./assets/{ddid}.xml", "w") as f:
             f.write(entity)
             
-        # for row in tree:
-        #     print(row.tag)
-        #     print(row.text)
-            
         session_id = session.get("key", "not set")
         print(session_id)
 

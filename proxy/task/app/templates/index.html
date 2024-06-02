@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Proxy</title>
-</head>
-<body>
-    <h1>Web Proxy</h1>
-    <form action="/proxy" method="GET">
-        <label for="url">Enter URL:</label><br>
-        <input type="text" id="url" name="url" style="width: 80%;"><br><br>
-        <input type="submit" value="Proxy">
-    </form>
-</body>
-</html>
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+
+<p>Добро пожаловать в супер-пупер интранет прокси! 
+<p>Можно пользоваться только интранетом: <a href="/proxy?url=http://intranet">http://intranet</a></p>
+<p>не вздумайте гуглить :)</p>
+
+<h1>Web Proxy</h1>
+<form action="/proxy" method="GET">
+  <label for="url">Enter URL:</label><br />
+  <input type="text" id="url" name="url" style="width: 80%" /><br /><br />
+  <input type="submit" value="Proxy" />
+</form>
+{% endblock %}

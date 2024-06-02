@@ -1,14 +1,11 @@
-from flask import Flask, request, render_template, session, redirect, url_for
+from flask import Flask, request, render_template, redirect, make_response, jsonify
 import jwt
 import time
-import jwt
 import secrets
 import string
 
 
 app = Flask(__name__, template_folder='templates')
-
-app.secret_key = 'super secret key'
 
 real_flag = ''
 
@@ -24,6 +21,11 @@ def generate_super_random_string(length=16):
 
 
 super_random_string = generate_super_random_string(32)
+
+print(generate_super_random_string(32))
+print(generate_super_random_string(32))
+print(generate_super_random_string(32))
+print(generate_super_random_string(32))
 
 def generate_jwt_token(user_name: str):
     payload = {
@@ -48,8 +50,9 @@ def login():
         
         if username == 'admin' and password == 'password':
             token = generate_jwt_token(username)
-            session['token'] = token
-            return redirect(url_for('profile'))
+            resp = make_response(redirect('/profile'))
+            resp.set_cookie('Authorization', token)
+            return resp
         else:
             return "Invalid credentials", 401
     return render_template('login.html')
@@ -62,11 +65,13 @@ def register():
         password = request.form['password']
         
         if username == 'admin':
-            return "Only for Admin!", 403
+            return "Access denied!", 403
     
         token = generate_jwt_token(username)
-        session['token'] = token
-        return redirect(url_for('profile'))
+        
+        resp = make_response(redirect('/profile'))
+        resp.set_cookie('Authorization', token)
+        return resp
     return render_template('register.html')
 
 
@@ -75,17 +80,23 @@ def profile():
     options = {
         "verify_signature": '',
         "algorithms": ['HS256'],
-        "keys": ['aadad', 'awdawd']
+        "keys": [
+            'yZsSfyHRiVvZW#yjJgjSsq^&amp;cl$vU8e#', 
+            'EbCw0XQ1U^aKLX5BLZ#hQ1w5v5W^mPqL',
+            '#rPloFjP8^zFOW8@qsxYbcoMcA8qfZ@j',
+            'mzkcCzhvD3fM^YJVtGhTMt#YPREdMY$E',
+        ]
     }
-    
-    if 'token' not in session:
-        return "Access denied", 402
+    token = request.cookies.get('Authorization')
+
+    if not token:
+        return jsonify({'message': 'Token is missing'}), 401
     try:
-        decoded = jwt.decode(session['token'], options=options)
+        decoded = jwt.decode(token, options=options)
         user_name = decoded['user_name']
-        
+        print('decoded', decoded)
         if user_name == 'admin':
-            return render_template('admin.html')
+            return render_template('profile.html', flag=real_flag)
         else:
             return f"Welcome, User {user_name}!", 200
     except jwt.InvalidTokenError:
