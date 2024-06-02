@@ -10,6 +10,6 @@ RUN groupadd -g 1001 app && useradd -g 1001 -u 1001 -m -d /app app -s /bin/bash
 
 WORKDIR /app
 USER 1001
-COPY ./app .
+COPY --chmod=655 ./app .
 RUN pip3 install -r requirements.txt
-CMD gunicorn --bind 0.0.0.0:8888 app:app  
+CMD gunicorn --bind 0.0.0.0:8888 app:app
