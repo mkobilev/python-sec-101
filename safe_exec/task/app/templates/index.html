@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+
+<p>Больше не хочу делать калькуляторы - теперь хочу писать интерпретаторы.</p>
+<p>Научился запускать Python код через exec(), но пока не вижу результат.</p>
+
+<form action="/calc" method="post">
+  <div class="form-group">
+    <label for="password">Python код:</label>
+    <textarea
+      type="text"
+      id="command"
+      name="command"
+      class="form-control"
+      required
+    ></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Запустить</button>
+</form>
+
+{% endblock %}
