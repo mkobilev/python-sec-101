@@ -1,0 +1,85 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+<br />
+
+<div>
+  <h3>Доступные пользователи:</h3>
+  {% for user in usernames %}
+  <div>{{ user }}</div>
+  {% endfor %}
+</div>
+
+<br />
+<br />
+
+<form id="searchForm">
+  <div class="form-group">
+    <label for="username">Поиск Пользователя:</label>
+    <input
+      type="text"
+      id="usernameInput"
+      class="form-control"
+      placeholder="Введите имя пользователя"
+      required
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Найти</button>
+</form>
+
+<br />
+<hr />
+<div><pre id="resultContainer" style="display: contents"></pre></div>
+
+<script>
+  function output(inp) {
+    document.body.appendChild(document.createElement("pre")).innerHTML = inp;
+  }
+
+  function syntaxHighlight(json) {
+    json = json
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    return json.replace(
+      /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+      function (match) {
+        var cls = "number";
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = "key";
+          } else {
+            cls = "string";
+          }
+        } else if (/true|false/.test(match)) {
+          cls = "boolean";
+        } else if (/null/.test(match)) {
+          cls = "null";
+        }
+        return '<span class="' + cls + '">' + match + "</span>";
+      }
+    );
+  }
+
+  $(document).ready(function () {
+    $("#searchForm").on("submit", function (e) {
+      e.preventDefault();
+      var username = $("#usernameInput").val();
+      if (!username) return;
+
+      $.get("/select", { username: username }, function (data) {
+        if (data) {
+          var resultHtml = "";
+          resultHtml += `${syntaxHighlight(
+            JSON.stringify(data, undefined, 4)
+          )}`;
+          $("#resultContainer").html(resultHtml);
+        } else {
+          $("#resultContainer").html("<p>Пользователи не найдены.</p>");
+        }
+      }).fail(function () {
+        $("#resultContainer").html("<p>Ошибка при выполнении запроса.</p>");
+      });
+    });
+  });
+</script>
+
+{% endblock %}

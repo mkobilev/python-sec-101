@@ -4,10 +4,11 @@ name: "task_sqli"
 
 services:
     app:
-       build:
-           context: .
-       ports:
-           -  "8888"
+        container_name: "task_sqli"
+        build:
+            context: .
+        ports:
+            -  "4444:8888"
     # nginx: 
     #     image: nginx:latest
     #     volumes:
