@@ -28,6 +28,17 @@ app = FastAPI()
 
 set_storage(repository=f'{DB_FILENAME}.nosql.db', storage='sqlite', use_bson=False)
 
+# The `db_client` variable is creating a MontyDB client instance to interact with the MontyDB
+# database. It is connecting to the specified database file (`f"{DB_FILENAME}.nosql.db"`) and
+# configuring the client with certain settings like synchronous mode, automatic indexing, and busy
+# timeout. This client instance is used to perform operations on the MontyDB database, such as
+# inserting data from a SQL database during initialization (`init_nosql_db` function) and querying for
+# users based on a username (`get_nosql_users` function).
+# The `db_client` variable is creating a MontyClient instance to connect to the database specified by
+# the `DB_FILENAME` variable. It is used to interact with the NoSQL database storage for the
+# application. The `MontyClient` is configured with specific settings such as the database file name,
+# synchronous mode, automatic indexing, and busy timeout. This client is then used to access and
+# manipulate data in the NoSQL database within the application.
 db_client = MontyClient(
         f"{DB_FILENAME}.nosql.db",
         synchronous=1,
@@ -123,7 +134,7 @@ async def run_sql_query(query, commit=False):
 async def init_nosql_db():
     if path.isdir(f'{DB_FILENAME}.nosql.db'):
         rmtree(f'{DB_FILENAME}.nosql.db')
-    users = db_client.vfapi.users
+    users = db_client.podlodka.users
     data = await run_sql_query('SELECT * FROM USERS;')
     for user in data['users']:
         users.insert_one({
@@ -144,7 +155,7 @@ def get_nosql_users(query):
     if len(query)!= 1 or 'username' not in query:
         return "Ошибка: В запросе должен быть только один ключ 'username'"
 
-    users = db_client.vfapi.users
+    users = db_client.podlodka.users
     user_data = tuple(users.find(query))
     for data in user_data: 
         data.pop('_id')
