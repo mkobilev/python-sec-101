@@ -1,6 +1,6 @@
 version: "3"
 
-name: "task1"
+name: "task_pickle_rce"
 
 services:
     app:

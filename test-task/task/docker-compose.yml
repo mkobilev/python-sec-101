@@ -1,6 +1,6 @@
 version: "3"
 
-name: "taskN"
+name: "task_test"
 
 services:
     app:

@@ -1,19 +1,19 @@
 version: "3"
 
-name: "task5"
+name: "task_ssti"
 
 services:
     app:
        build:
            context: .
        ports:
-           -  "8888"
-    nginx: 
-        image: nginx:latest
-        volumes:
-        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-        - ./app/static/:/app/static/:ro
-        depends_on:
-        - app
-        ports:
-        - "80:80"
+           -  "31331:8888"
+#    nginx:
+#        image: nginx:latest
+#        volumes:
+#        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+#        - ./app/static/:/app/static/:ro
+#        depends_on:
+#        - app
+#        ports:
+#        - "31331:80"

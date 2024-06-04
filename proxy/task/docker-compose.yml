@@ -7,19 +7,19 @@ services:
        build:
            context: .
        ports:
-           -  "8888"
+           -  "31332:8888"
     intranet:
        build:
            context: ./app-localhost
     google.com:
        build:
            context: ./app-internet
-    nginx: 
-        image: nginx:latest
-        volumes:
-        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-        - ./app/static/:/app/static/:ro
-        depends_on:
-        - app
-        ports:
-        - "80:80"
+#    nginx:
+#        image: nginx:latest
+#        volumes:
+#        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+#        - ./app/static/:/app/static/:ro
+#        depends_on:
+#        - app
+#        ports:
+#        - "31332:80"

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}🜚 Goldino's Pizza 🍕{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js" integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw=" crossorigin="anonymous" nonce=""></script>
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />    <!-- Custom -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    {% endblock %}
+</head>
+
+<html>
+
+<body class="fill-screen d-flex flex-column justify-content-start align-items-stretch bg-dark text-light">
+    {% block header %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% block footer %}{% endblock %}
+</body>
+
+</html>

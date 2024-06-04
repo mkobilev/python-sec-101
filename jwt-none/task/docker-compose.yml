@@ -1,6 +1,6 @@
 version: "3"
 
-name: "task6"
+name: "task_jwt_none"
 
 services:
     app:

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Поиск Пользователя</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h1>Поиск Пользователя</h1>
+    <form id="searchForm">
+      <input
+        type="text"
+        id="usernameInput"
+        placeholder="Введите имя пользователя"
+      />
+      <button type="submit">Найти</button>
+    </form>
+
+    <div id="resultContainer"></div>
+
+    <script>
+      $(document).ready(function () {
+        $("#searchForm").on("submit", function (e) {
+          e.preventDefault();
+          var username = $("#usernameInput").val();
+          if (!username) return;
+
+          $.get("/select", { username: username }, function (data) {
+            // Обработка нового формата ответа
+            if (data) {
+              var resultHtml = '<table border="1">';
+              resultHtml += `${data[0]} ${data[1]} ${data[2]} ${data[3]} ${data[4]} ${data[5]} ${data[6]}`;
+              $("#resultContainer").html(resultHtml);
+            } else {
+              $("#resultContainer").html("<p>Пользователи не найдены.</p>");
+            }
+          }).fail(function () {
+            $("#resultContainer").html("<p>Ошибка при выполнении запроса.</p>");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
