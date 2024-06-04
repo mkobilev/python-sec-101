@@ -1,4 +1,3 @@
-# FROM python:3.10.8-slim as python-base
 FROM tiangolo/uvicorn-gunicorn:python3.11
 
 COPY ./app/requirements.txt /tmp/requirements.txt

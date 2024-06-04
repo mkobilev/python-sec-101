@@ -32,7 +32,6 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):
     usernames = [user.get('username') for user in users[2::]]
-    print('usernames', usernames)
     return templates.TemplateResponse(
         request=request, name="home.html", context={"usernames": usernames}
     )
@@ -63,7 +62,6 @@ async def init_sql_db():
     await db.commit()
     # for _ in range(random.randint(5, 10)):
     for user in users:
-        print("user", user)
         query = f'''
                     INSERT INTO users ( name,
                                         username,

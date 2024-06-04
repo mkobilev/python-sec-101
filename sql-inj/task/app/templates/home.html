@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}UserDB{% endblock %} {% block content
+%}
 <br />
 
 <div>
@@ -67,13 +68,17 @@
 
       $.get("/select", { username: username }, function (data) {
         if (data) {
+          if (data.users && data.users.length == 0) {
+            return $("#resultContainer").html(
+              "<p>Пользователь не найдены.</p>"
+            );
+          }
+
           var resultHtml = "";
           resultHtml += `${syntaxHighlight(
             JSON.stringify(data, undefined, 4)
           )}`;
           $("#resultContainer").html(resultHtml);
-        } else {
-          $("#resultContainer").html("<p>Пользователи не найдены.</p>");
         }
       }).fail(function () {
         $("#resultContainer").html("<p>Ошибка при выполнении запроса.</p>");

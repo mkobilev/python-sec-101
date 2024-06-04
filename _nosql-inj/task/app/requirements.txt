@@ -1,7 +1,0 @@
-fastapi
-pydantic
-uvicorn
-aiosqlite
-montydb
-faker
-email-validator
