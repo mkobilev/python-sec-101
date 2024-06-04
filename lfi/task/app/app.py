@@ -92,7 +92,6 @@ def upload_file():
         if file:
             filename = secure_filename(file.filename)
             a = session.get('tmp')
-            print('a', a)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/' + session['username'], filename))
             flash(f"File '{filename}' uploaded successfully.")
             return redirect(url_for('home'))
@@ -108,7 +107,6 @@ def view_image():
         abort(400)
 
     file_path = os.path.join(app.config['UPLOAD_FOLDER'] + '/' + session['username'], filename)
-    print("", file_path)
     try:
         return send_file(file_path, mimetype='image/jpeg')
     except FileNotFoundError:

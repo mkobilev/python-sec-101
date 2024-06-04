@@ -22,11 +22,6 @@ def generate_super_random_string(length=16):
 
 super_random_string = generate_super_random_string(32)
 
-print(generate_super_random_string(32))
-print(generate_super_random_string(32))
-print(generate_super_random_string(32))
-print(generate_super_random_string(32))
-
 def generate_jwt_token(user_name: str):
     payload = {
         "user_name": user_name,
@@ -94,7 +89,6 @@ def profile():
     try:
         decoded = jwt.decode(token, options=options)
         user_name = decoded['user_name']
-        print('decoded', decoded)
         if user_name == 'admin':
             return render_template('profile.html', flag=real_flag)
         else:
