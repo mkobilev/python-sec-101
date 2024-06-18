@@ -2,7 +2,7 @@ import requests
 import jwt
 import time
 
-url = 'http://127.0.0.1:8888/profile'
+url = 'http://tasks.mxkv.ru:12345/profile'
 
 data_payload = {
     "user_name": 'admin',

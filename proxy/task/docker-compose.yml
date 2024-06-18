@@ -4,16 +4,21 @@ name: "proxy"
 
 services:
     app:
-       build:
-           context: .
-       ports:
-           -  "31332:8888"
+        container_name: "proxy-app"
+        restart: unless-stopped
+        build:
+            context: .
+        ports:
+            -  "31332:8888"
     intranet:
-       build:
-           context: ./app-localhost
+        container_name: "proxy-intranet"
+        restart: unless-stopped
+        build:
+            context: ./app-localhost
     google.com:
-       build:
-           context: ./app-internet
+        container_name: "proxy-internet"
+        build:
+            context: ./app-internet
 #    nginx:
 #        image: nginx:latest
 #        volumes:

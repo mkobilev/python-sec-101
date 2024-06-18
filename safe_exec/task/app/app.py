@@ -22,17 +22,20 @@ BLACK_LIST = ['eval', 'exec', 'import', 'open', 'os', 'read', 'system', 'write']
 @app.route('/calc', methods=['POST'])
 def calc():
     command = request.form.get('command')
+
     if not command:
         return jsonify({'error': 'No command provided'}), 400    
     
     for cmd in BLACK_LIST:
         if cmd in command:
             return "Access denied!", 403
-    
-    result = exec(command)
+    try:
+        result = exec(command)
+    except Exception as ex:
+        result = str(ex)
     
     return render_template("result.html", result=result)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

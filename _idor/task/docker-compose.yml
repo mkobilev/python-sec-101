@@ -4,10 +4,12 @@ name: "task_name"
 
 services:
     app:
-       build:
-           context: .
-       ports:
-           -  "8888"
+        container_name: "task-name"
+        restart: unless-stopped
+        build:
+            context: .
+        ports:
+            -  "8888"
     nginx: 
         image: nginx:latest
         volumes:

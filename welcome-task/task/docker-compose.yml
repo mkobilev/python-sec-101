@@ -4,10 +4,12 @@ name: "welcome-task"
 
 services:
     app:
-       build:
-           context: .
-       ports:
-           -  "1337:8888"
+        container_name: "welcome-task"
+        restart: unless-stopped
+        build:
+            context: .
+        ports:
+            -  "1337:8888"
 #    nginx:
 #        image: nginx:latest
 #        volumes:

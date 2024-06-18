@@ -4,10 +4,12 @@ name: "task_safe_exec"
 
 services:
     app:
-       build:
-           context: .
-       ports:
-           -  "37331:8888"
+        container_name: "task_safe_exec"
+        restart: unless-stopped
+        build:
+            context: .
+        ports:
+            -  "37331:8888"
     # nginx: 
     #     image: nginx:latest
     #     volumes:

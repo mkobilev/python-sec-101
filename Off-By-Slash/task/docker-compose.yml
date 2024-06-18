@@ -5,7 +5,8 @@ name: "task_off_by_slash"
 services:
     app:
         container_name: task_off_by_slash
-        restart: always
-        build: .
+        restart: unless-stopped
+        build:
+            context: .
         ports:
-        - "31338:80"
+            - "31338:80"

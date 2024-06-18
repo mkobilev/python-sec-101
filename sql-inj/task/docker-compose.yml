@@ -5,6 +5,7 @@ name: "task_sqli"
 services:
     app:
         container_name: "task_sqli"
+        restart: unless-stopped
         build:
             context: .
         ports:

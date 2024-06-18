@@ -4,10 +4,12 @@ name: "task_pickle_rce"
 
 services:
     app:
-       build:
-           context: .
-       ports:
-           -  "31337:8888"
+        container_name: "task_pickle_rce"
+        restart: unless-stopped
+        build:
+            context: .
+        ports:
+            -  "31337:8888"
 #    nginx:
 #        image: nginx:latest
 #        volumes:

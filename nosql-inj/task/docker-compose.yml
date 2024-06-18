@@ -5,6 +5,7 @@ name: "task_nosqli"
 services:
     app:
         container_name: "task_nosqli"
+        restart: unless-stopped
         build:
             context: .
         ports:

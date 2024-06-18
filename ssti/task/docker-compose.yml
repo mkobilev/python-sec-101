@@ -4,10 +4,12 @@ name: "task_ssti"
 
 services:
     app:
-       build:
-           context: .
-       ports:
-           -  "31331:8888"
+        container_name: "task_ssti"
+        restart: unless-stopped
+        build:
+            context: .
+        ports:
+            -  "31331:8888"
 #    nginx:
 #        image: nginx:latest
 #        volumes:
