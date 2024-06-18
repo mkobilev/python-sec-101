@@ -1,0 +1,26 @@
+# Webstorm/Vscode
+.idea/
+.vscode/
+
+# Let's encrypt
+letsencrypt/
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest_cache
+
+.env
+db.sqlite3
+
+*.nosql.db/

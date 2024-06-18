@@ -1,0 +1,12 @@
+version: "3"
+
+name: "task_off_by_slash"
+
+services:
+    app:
+        container_name: task_off_by_slash
+        restart: unless-stopped
+        build:
+            context: .
+        ports:
+            - "31338:80"

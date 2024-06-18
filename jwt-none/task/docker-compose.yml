@@ -1,0 +1,21 @@
+version: "3"
+
+name: "task_jwt_none"
+
+services:
+    app:
+        container_name: "task_jwt_none"
+        restart: unless-stopped
+        build:
+           context: .
+        ports:
+           -  "12345:8888"
+#    nginx:
+#        image: nginx:latest
+#        volumes:
+#        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+#        - ./app/static/:/app/static/:ro
+#        depends_on:
+#        - app
+#        ports:
+#        - "80:80"

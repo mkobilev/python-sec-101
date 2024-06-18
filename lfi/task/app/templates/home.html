@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+<h1>Добро пожаловать в ФОТОАРХИВ!</h1>
+{% if 'username' not in session %}
+<p>
+  <a href="{{ url_for('login') }}">Вход</a> или
+  <a href="{{ url_for('register') }}">Регистрация</a>
+</p>
+{% endif %}
+
+{% if files %}
+<h3>Ваши файлы</h3>
+{% endif %}
+
+{% for file in files %}
+<p><a href="{{ url_for('view_image', filename=file) }}">{{ file }}</a></p>
+{% endfor %}
+
+<hr />
+
+<h2>Загрузите фото:</h2>
+<form method="post" action="/upload" enctype="multipart/form-data">
+  <input type="file" name="file" />
+  <input type="submit" value="Upload" />
+</form>
+
+{% endblock %}

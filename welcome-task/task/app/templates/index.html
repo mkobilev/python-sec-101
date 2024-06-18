@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome!</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+        <h1>Добро пожаловать!</h1>
+
+            <img src="/static/welcome.gif" width="400" />
+    <p>Чтобы находить секреты - нужно уметь читать между строк.</p>
+
+    <p>Как только узнаете секрет - можно сдавать флаг проверяющей системе</p>
+
+    <p>В каждом задании есть ручка, дернув за которую можно проверить тот ли секрет вы узнали :) </p>
+    <div>
+        GET /submit_flag/< flag:str >
+    </div>
+
+    <p hidden>{{ flag }}</p>
+
+    </div>
+
+
+  </body>
+</html>

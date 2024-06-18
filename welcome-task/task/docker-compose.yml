@@ -1,0 +1,21 @@
+version: "3"
+
+name: "welcome-task"
+
+services:
+    app:
+        container_name: "welcome-task"
+        restart: unless-stopped
+        build:
+            context: .
+        ports:
+            -  "1337:8888"
+#    nginx:
+#        image: nginx:latest
+#        volumes:
+#        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+#        - ./app/static/:/app/static/:ro
+#        depends_on:
+#        - app
+#        ports:
+#        - "80:80"

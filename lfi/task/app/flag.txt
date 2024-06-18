@@ -1,0 +1,1 @@
+PODLODKA{'LFI_../../etc/passwd'}
